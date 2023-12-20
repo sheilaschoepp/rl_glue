@@ -100,8 +100,6 @@ class RLGlue:
         self._num_ep_steps = 0  # number of steps in the current episode
         # self._num_steps = max(self._num_steps, 0)  # number of steps in a run
 
-        self._num_episodes += 1  # moved here from rl_step
-
         state = self._environment.env_start()
         self._action = self._agent.agent_start(state)
 
@@ -131,7 +129,7 @@ class RLGlue:
 
         if terminal:
             self._action = self._agent.agent_end(reward, next_state, terminal)
-            # self._num_episodes += 1  # moved to rl_start to handle the case when we terminate an episode early by reaching max steps
+            self._num_episodes += 1
         else:
             self._action = self._agent.agent_step(reward, next_state, terminal)
 
