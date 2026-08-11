@@ -1,77 +1,79 @@
-from rl_glue.rl_glue import BaseAgent
+"""
+An abstract class that specifies the Agent for RLGlue.
+"""
+
+from abc import ABC, abstractmethod
 
 
-class Agent(BaseAgent):
+class BaseAgent(ABC):
     """
-    Agent.
+    Defines the interface of an RLGlue Agent.
+
+    ie. These methods must be defined in your own Agent classes
     """
 
+    @abstractmethod
     def __init__(self):
         """
         Declare agent variables.
         """
-        pass
 
-    def agent_init(self):
+    @abstractmethod
+    def agent_init(self, agent_info=None):
         """
         Start of a run.
         """
-        pass
 
+    @abstractmethod
     def agent_start(self, state):
         """
         Start of an episode.
 
         Parameters
         ----------
-        state : float64 numpy array with shape (state_dim,)
-            the agent's current state
+        state : Any
+            the agent's state
 
         Returns
         -------
-        action : float64 numpy array with shape (action_dim,)
+        action : Any
             the first action the agent takes
         """
-        pass
 
-    def agent_step(self, reward, next_state, terminal):
+    @abstractmethod
+    def agent_step(self, reward, next_state):
         """
-        Take a step in the environment.
+        A step taken by the agent.
 
         Parameters
         ----------
         reward : float64
-            the reward received for taking the last action
-        next_state : float64 numpy array with shape (state_dim,)
-            the agent's current state
-        terminal : boolean
-            true if the goal state has been reached after taking action; otherwise false
+            the reward the agent received for taking the last action
+        next_state : Any
+            the agent's state after taking the last action
 
         Returns
         -------
-        action : float64 numpy array with shape (action_dim,)
+        action : Any
             the action the agent is taking
         """
-        pass
 
-    def agent_end(self, reward, next_state, terminal):
+    @abstractmethod
+    def agent_end(self, reward):
         """
         End of an episode.
 
         Parameters
         ----------
         reward : float64
-            the reward received for entering the terminal state
-        next_state : float64 numpy array with shape (state_dim,)
-            the agent's current state
-        terminal : boolean
-            true if the goal state has been reached after taking action; otherwise false
+            the reward the agent received for entering the terminal
+            state
         """
-        pass
 
+    @abstractmethod
     def agent_message(self, message):
         """
-        Receive a message from RLGlue.
+        Pass information to RLGlue.
 
         Parameters
         ----------
@@ -83,10 +85,9 @@ class Agent(BaseAgent):
         response : str
             the agent's response to the message (optional)
         """
-        pass
 
-    def agent_close(self):
+    @abstractmethod
+    def agent_cleanup(self):
         """
-        Close the agent.
+        Clean up the agent.
         """
-        pass

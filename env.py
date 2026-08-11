@@ -1,64 +1,65 @@
-from rl_glue.rl_glue import BaseEnvironment
+"""
+Abstract environment base class for RLGlue.
+"""
+
+from abc import ABC, abstractmethod
 
 
-class Environment(BaseEnvironment):
+class BaseEnvironment(ABC):
     """
-    Environment.
+    Defines the interface of an RLGlue environment.
+
+    ie. These methods must be defined in your own environment classes.
     """
 
+    @abstractmethod
     def __init__(self):
         """
         Declare environment variables.
-
-        Parameters
-        ----------
-        seed : int
-            the random seed for the environment
         """
-        pass
 
-    # repeat for each run
-    def env_init(self):
+    @abstractmethod
+    def env_init(self, env_info=None):
         """
         Start of a run.
         """
-        pass
 
-    # repeat for each episode
+    @abstractmethod
     def env_start(self):
         """
         Start of an episode.
 
         Returns
         -------
-        state : float64 numpy array with shape (state_dim,)
-            the first state observation of the environment
+        state : Any
+            the first state / observation of the environment
         """
-        pass
 
+    @abstractmethod
     def env_step(self, action):
         """
-        Take a step in the environment.
+        A step taken by the environment.
 
         Parameters
         ----------
-        action : float64 numpy array with shape (action_dim,)
+        action : Any
             the action taken by the agent
 
         Returns
         -------
         reward : float64
-            the reward received for taking action
-        state : float64 numpy array with shape (state_dim,)
-            the state observation of the environment
+            the reward for taking action
+        state : Any
+            the state of the environment
         terminal : boolean
-            true if the goal state has been reached after taking action; otherwise false
+            true if the goal state has been reached after taking
+            action; otherwise false
         """
-        pass
 
+    @abstractmethod
     def env_message(self, message):
         """
-        Receive a message from RLGlue.
+        Pass information to RLGlue.
 
         Parameters
         ----------
@@ -70,10 +71,9 @@ class Environment(BaseEnvironment):
         response : str
             the environment's response to the message (optional)
         """
-        pass
 
-    def env_close(self):
+    @abstractmethod
+    def env_cleanup(self):
         """
-        Close the environment.
+        Clean up the environment.
         """
-        pass
